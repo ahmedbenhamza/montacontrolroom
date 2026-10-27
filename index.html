@@ -1,0 +1,1098 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#12142a">
+<title>Monta Control Room 🍺</title>
+<style>
+:root {
+  --bg: #101324;
+  --panel: #1b2038;
+  --panel2: #252b48;
+  --border: #3b4265;
+  --text: #f8f6ff;
+  --muted: #b6b8d1;
+  --mint: #79ead0;
+  --orange: #ffbc6b;
+  --pink: #fd7ea8;
+  --purple: #a99aff;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse at 5% 0%, #2c2250, transparent 35%),
+    radial-gradient(ellipse at 100% 35%, #1a3b46, transparent 30%),
+    var(--bg);
+  color: var(--text);
+  font: 16px/1.5 system-ui, sans-serif;
+  min-height: 100vh;
+}
+button, input { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, input:focus-visible {
+  outline: 3px solid var(--mint);
+  outline-offset: 2px;
+}
+.wrap {
+  max-width: 1120px;
+  margin: auto;
+  padding: 24px 18px 70px;
+}
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.logo {
+  font-weight: 1000;
+  letter-spacing: 1px;
+  font-size: 17px;
+}
+.logo span { color: var(--mint); }
+.chip {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 7px 12px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+.hero {
+  overflow: hidden;
+  border: 1px solid #605581;
+  background: linear-gradient(130deg, #463578, #262647 68%);
+  border-radius: 26px;
+  padding: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.eyebrow {
+  color: var(--mint);
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+.hero h1 {
+  font-size: clamp(29px, 5vw, 52px);
+  line-height: 1.03;
+  margin: 10px 0;
+}
+.hero p {
+  color: #dfd8f7;
+  margin: 0;
+  max-width: 500px;
+}
+.mascot {
+  font-size: clamp(80px, 15vw, 155px);
+  transform: rotate(-12deg);
+  filter: drop-shadow(0 12px 6px #1116);
+  user-select: none;
+}
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 28px 0 12px;
+}
+.section-title h2 {
+  font-size: 21px;
+  margin: 0;
+}
+.section-title small { color: var(--muted); }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+.stat, .card {
+  border: 1px solid var(--border);
+  background: linear-gradient(155deg, #222741, #191e36);
+  border-radius: 20px;
+  padding: 20px;
+}
+.stat .label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 800;
+  color: var(--muted);
+}
+.stat .number {
+  font-size: clamp(24px, 3vw, 39px);
+  font-weight: 950;
+  line-height: 1.15;
+  margin-top: 10px;
+}
+.stat .detail {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 5px;
+}
+.mint { color: var(--mint); }
+.orange { color: var(--orange); }
+.pink { color: var(--pink); }
+.purple { color: var(--purple); }
+.cols {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 16px;
+}
+.drink-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 9px;
+  margin: 15px 0;
+}
+.drink {
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--panel2);
+  padding: 13px 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  transition: transform .12s, border-color .12s;
+}
+.drink span {
+  display: block;
+  font-size: 30px;
+}
+.drink:hover { transform: translateY(-2px); }
+.drink.active {
+  border-color: var(--mint);
+  background: #254c50;
+  box-shadow: 0 0 0 1px var(--mint) inset;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.field label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 750;
+}
+.field input {
+  min-width: 0;
+  width: 100%;
+  background: #12182c;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  padding: 11px;
+  color: var(--text);
+}
+input[type=date] { color-scheme: dark; }
+.actions {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin-top: 13px;
+}
+.btn {
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-weight: 850;
+  color: #0e1827;
+  background: var(--mint);
+}
+.btn:hover { filter: brightness(1.06); }
+.btn.secondary {
+  background: var(--panel2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.note {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 13px 0 0;
+}
+.oracle {
+  background: linear-gradient(145deg, #52375f, #262a50);
+  border-radius: 18px;
+  padding: 18px;
+  border: 1px solid #6a5079;
+  min-height: 120px;
+}
+.oracle b {
+  color: var(--orange);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+.oracle p {
+  margin: 10px 0 0;
+  font-size: 17px;
+  font-weight: 760;
+}
+.meter-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 22px;
+}
+.meter {
+  height: 13px;
+  border-radius: 999px;
+  background: #343c56;
+  overflow: hidden;
+  margin: 9px 0;
+}
+.meter > div {
+  width: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg, var(--mint), var(--orange), var(--pink)
+  );
+  transition: width .25s;
+}
+.mini {
+  font-size: 12px;
+  color: var(--muted);
+}
+.trend {
+  height: 148px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  align-items: end;
+  gap: 10px;
+  margin-top: 18px;
+}
+.bar-col {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  justify-content: flex-end;
+  height: 100%;
+}
+.bar-num {
+  font-size: 11px;
+  color: var(--muted);
+}
+.bar-track {
+  height: 105px;
+  width: min(100%, 35px);
+  display: flex;
+  align-items: end;
+  background: #272e46;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.bar {
+  width: 100%;
+  background: linear-gradient(0deg, var(--purple), var(--pink));
+  border-radius: 7px 7px 0 0;
+}
+.bar-col .day {
+  font-size: 11px;
+  color: var(--muted);
+}
+.badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 13px;
+}
+.award {
+  border-radius: 999px;
+  padding: 8px 10px;
+  background: #2a3850;
+  color: var(--mint);
+  border: 1px solid #496771;
+  font-size: 12px;
+  font-weight: 700;
+}
+.award.locked {
+  color: #9093ae;
+  background: #26283d;
+  border-color: #393b57;
+}
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 7px;
+  margin-top: 14px;
+}
+.calday {
+  background: #222842;
+  border: 1px solid #3a4362;
+  border-radius: 12px;
+  min-height: 73px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px;
+}
+.calday.today { border-color: var(--purple); }
+.calday.dry {
+  background: #1c4745;
+  border-color: #376d69;
+}
+.calday.drinking {
+  background: #503546;
+  border-color: #7d5468;
+}
+.calday .daynum {
+  font-size: 15px;
+  font-weight: 800;
+}
+.calday .dayinfo {
+  font-size: 10px;
+  color: #d9d9e8;
+  white-space: nowrap;
+}
+.log-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid #343953;
+}
+.log-row:last-child { border-bottom: 0; }
+.log-name { font-weight: 800; }
+.log-meta {
+  color: var(--muted);
+  font-size: 12px;
+}
+.icon-btn {
+  background: transparent;
+  color: #ffb4c9;
+  border: 1px solid #775067;
+  border-radius: 9px;
+  padding: 5px 9px;
+}
+.status {
+  padding: 13px;
+  border-radius: 12px;
+  background: #273c49;
+  color: #c9e8ec;
+  font-size: 13px;
+  margin-top: 12px;
+}
+.water {
+  font-size: 29px;
+  font-weight: 900;
+  margin: 12px 0 4px;
+}
+.footer {
+  padding: 22px 0;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.footer a { color: var(--mint); }
+#toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translate(-50%, 20px);
+  opacity: 0;
+  pointer-events: none;
+  transition: .2s;
+  background: #e6fff6;
+  color: #152d31;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 850;
+  box-shadow: 0 15px 35px #0008;
+  z-index: 10;
+}
+#toast.show {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+@media(max-width:850px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .cols { grid-template-columns: 1fr; }
+  .hero { padding: 24px; }
+  .mascot { font-size: 85px; }
+}
+@media(max-width:480px) {
+  .wrap { padding: 14px 12px 45px; }
+  .logo { font-size: 14px; }
+  .hero { padding: 20px; }
+  .hero h1 { font-size: 30px; }
+  .mascot { font-size: 64px; }
+  .stat, .card { padding: 15px; }
+  .drink-grid { grid-template-columns: repeat(3, 1fr); }
+  .calendar { gap: 4px; }
+  .calday { min-height: 60px; border-radius: 9px; }
+  .calday .dayinfo { font-size: 9px; }
+  .form-row { gap: 7px; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="logo">🍺 MONTA<span>CONTROL</span>ROOM</div>
+    <div class="chip">OPERATION: ONE DAY AT A TIME</div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">THE OFFICIAL MONTA MONITOR</div>
+      <h1>Keep the fun.<br><span class="mint">Know the numbers.</span></h1>
+      <p>
+        One legendary character. One very honest drink log.
+        Zero bonus points for drinking more.
+      </p>
+    </div>
+    <div class="mascot" aria-hidden="true">🕵️</div>
+  </section>
+
+  <section class="stats" aria-label="Statistics">
+    <div class="stat">
+      <div class="label">🍹 Today's entries</div>
+      <div class="number orange" id="todayCount">0</div>
+      <div class="detail">Drinks logged today</div>
+    </div>
+    <div class="stat">
+      <div class="label">📏 Today / standard</div>
+      <div class="number pink" id="todayUnits">0.0</div>
+      <div class="detail">10 g alcohol per unit</div>
+    </div>
+    <div class="stat">
+      <div class="label">🗓️ This week</div>
+      <div class="number purple" id="weekUnits">0.0</div>
+      <div class="detail">Standard drinks, Mon–Sun</div>
+    </div>
+    <div class="stat">
+      <div class="label">🌱 Alcohol-free streak</div>
+      <div class="number mint" id="streak">0</div>
+      <div class="detail">Consecutive confirmed days</div>
+    </div>
+  </section>
+
+  <div class="section-title">
+    <h2>🍷 Monta's Drink Vault</h2>
+    <small>Log accurately, without judgment</small>
+  </div>
+
+  <div class="cols">
+    <section class="card">
+      <div class="form-row">
+        <div class="field">
+          <label for="entryDate">Log for date</label>
+          <input id="entryDate" type="date">
+        </div>
+        <div class="field">
+          <label for="customName">Drink description (optional)</label>
+          <input id="customName" type="text" maxlength="35"
+                 placeholder="e.g. Birthday pint">
+        </div>
+      </div>
+
+      <div class="drink-grid" id="drinkGrid"></div>
+
+      <div class="form-row">
+        <div class="field">
+          <label for="volume">Serving size (mL)</label>
+          <input id="volume" type="number"
+                 min="1" max="2000" step="1" value="330">
+        </div>
+        <div class="field">
+          <label for="abv">Alcohol strength (% ABV)</label>
+          <input id="abv" type="number"
+                 min="0.1" max="90" step="0.1" value="5">
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" id="addDrink">＋ Add this drink</button>
+        <button class="btn secondary" id="dryBtn">
+          🌱 Mark day alcohol-free
+        </button>
+      </div>
+
+      <p class="note">
+        Serving sizes and strengths are editable. One drink
+        does not always equal one standard drink.
+      </p>
+      <div id="dateStatus" class="status" role="status"></div>
+    </section>
+
+    <section class="card">
+      <div class="oracle">
+        <b>🔮 THE MONTA ORACLE</b>
+        <p id="oracleText" aria-live="polite">
+          The Oracle is checking the evidence…
+        </p>
+      </div>
+
+      <div class="meter-top">
+        <strong>Weekly perspective</strong>
+        <span class="mini" id="meterText">0 / 10</span>
+      </div>
+      <div class="meter"><div id="meterFill"></div></div>
+      <div class="mini">
+        French lower-risk reference: no more than 10 standard
+        drinks/week, no more than 2/day, with alcohol-free days.
+        This is not a safety threshold.
+      </div>
+
+      <div class="section-title">
+        <h2>💧 Hydration Department</h2>
+      </div>
+      <div class="water" id="waterCount">0 glasses today</div>
+      <div class="mini">
+        Water is tracked separately; it does not cancel
+        alcohol's effects.
+      </div>
+      <div class="actions">
+        <button class="btn secondary" id="addWater">
+          ＋ One glass of water
+        </button>
+        <button class="btn secondary" id="removeWater">
+          − Undo water
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <div class="section-title">
+    <h2>📈 The Seven-Day Situation</h2>
+    <small>Standard drinks (not number of glasses)</small>
+  </div>
+
+  <div class="cols">
+    <section class="card">
+      <strong>Last 7 days</strong>
+      <div class="trend" id="trend"></div>
+      <p class="note">
+        A question mark means nothing was logged, not
+        necessarily an alcohol-free day.
+      </p>
+    </section>
+
+    <section class="card">
+      <strong>🏆 Hall of Self-Control</strong>
+      <p class="mini">
+        Achievements celebrate tracking and alcohol-free choices
+        — never drinking more.
+      </p>
+      <div class="badge-list" id="awards"></div>
+      <div class="section-title">
+        <h2>Week's confirmed breaks</h2>
+        <small id="dryWeek">0 days</small>
+      </div>
+      <p class="mini">
+        Only days explicitly marked alcohol-free count.
+      </p>
+    </section>
+  </div>
+
+  <div class="section-title">
+    <h2>🗓️ The Evidence Calendar</h2>
+    <small>Last 21 days</small>
+  </div>
+
+  <section class="card">
+    <div class="calendar" id="calendar"></div>
+    <p class="note">
+      Green = confirmed alcohol-free · Pink = drinks recorded ·
+      Grey = no information. Tap a date to review it.
+    </p>
+  </section>
+
+  <div class="section-title">
+    <h2>🧾 Daily Report</h2>
+    <small id="logDateLabel"></small>
+  </div>
+
+  <section class="card">
+    <div id="logList"></div>
+    <div class="actions">
+      <button class="btn secondary" id="exportBtn">
+        ↓ Export data (JSON)
+      </button>
+    </div>
+    <p class="note">
+      Entries are saved only in this browser, on this device.
+      Export a backup before clearing browser data.
+    </p>
+  </section>
+
+  <footer class="footer">
+    Made for Monta, with consent and a little chaos.
+    For perspective, see
+    <a href="https://www.santepubliquefrance.fr/alcool/article/de-nouveaux-reperes-de-consommation-dalcool-pour-limiter-les-risques-sur-sa-sante"
+       target="_blank" rel="noopener noreferrer">
+      Santé publique France
+    </a>.
+    If someone drinks heavily every day or experiences withdrawal
+    symptoms, seek medical advice before stopping abruptly.
+    No information is uploaded by this app.
+  </footer>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  'use strict';
+
+  const KEY = 'monta-control-room-v1';
+
+  const drinks = [
+    {id:'beer',name:'Beer',emoji:'🍺',ml:330,abv:5},
+    {id:'red',name:'Red wine',emoji:'🍷',ml:150,abv:13},
+    {id:'white',name:'White wine',emoji:'🥂',ml:150,abv:12},
+    {id:'rose',name:'Rosé',emoji:'🌸',ml:150,abv:12},
+    {id:'sparkling',name:'Bubbles',emoji:'🍾',ml:120,abv:12},
+    {id:'cocktail',name:'Cocktail',emoji:'🍹',ml:200,abv:12},
+    {id:'spirit',name:'Spirits',emoji:'🥃',ml:40,abv:40},
+    {id:'cider',name:'Cider',emoji:'🍎',ml:330,abv:4.5},
+    {id:'other',name:'Other',emoji:'❓',ml:100,abv:10}
+  ];
+
+  const $ = id => document.getElementById(id);
+
+  const dateKey = d =>
+    `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+
+  const dayOffset = (date,n) => {
+    const d = new Date(`${date}T12:00:00`);
+    d.setDate(d.getDate()+n);
+    return dateKey(d);
+  };
+
+  const today = () => dateKey(new Date());
+
+  const weekStart = date => {
+    const d = new Date(`${date}T12:00:00`);
+    d.setDate(d.getDate()-(d.getDay()+6)%7);
+    return dateKey(d);
+  };
+
+  const number = v => (Math.round(v*10)/10).toFixed(1);
+
+  const initial = {entries:[],dryDates:[],waters:{}};
+  let data;
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY));
+    data = {
+      entries: Array.isArray(saved?.entries) ? saved.entries : [],
+      dryDates: Array.isArray(saved?.dryDates) ? saved.dryDates : [],
+      waters: saved?.waters && typeof saved.waters==='object'
+        ? saved.waters : {}
+    };
+  } catch {
+    data = initial;
+  }
+
+  const save = () => {
+    try {
+      localStorage.setItem(KEY,JSON.stringify(data));
+      return true;
+    } catch {
+      alert('Could not save. Check browser storage settings.');
+      return false;
+    }
+  };
+
+  let chosen = drinks[0];
+  let toastTimer;
+
+  const toast = message => {
+    const el = $('toast');
+    el.textContent = message;
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(
+      () => el.classList.remove('show'),2600
+    );
+  };
+
+  const gram = e =>
+    Number.isFinite(Number(e.grams))
+      ? Number(e.grams)
+      : Number(e.ml)*Number(e.abv)/100*0.789;
+
+  const unit = e => gram(e)/10;
+
+  const entriesFor = date =>
+    data.entries.filter(e=>e.date===date);
+
+  const unitsFor = date =>
+    entriesFor(date).reduce((s,e)=>s+unit(e),0);
+
+  const isDry = date =>
+    data.dryDates.includes(date) && entriesFor(date).length===0;
+
+  const weekDates = from =>
+    Array.from({length:7},(_,i)=>dayOffset(from,i));
+
+  const controls = () => {
+    $('drinkGrid').innerHTML = '';
+
+    drinks.forEach(drink => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'drink'+(drink.id===chosen.id?' active':'');
+
+      const emoji = document.createElement('span');
+      emoji.textContent = drink.emoji;
+      b.append(emoji,document.createTextNode(drink.name));
+
+      b.addEventListener('click',()=>{
+        chosen = drink;
+        $('volume').value = drink.ml;
+        $('abv').value = drink.abv;
+        controls();
+      });
+
+      $('drinkGrid').append(b);
+    });
+  };
+
+  const label = date =>
+    new Date(`${date}T12:00:00`).toLocaleDateString(
+      'en-GB',
+      {weekday:'short',day:'numeric',month:'short',year:'numeric'}
+    );
+
+  const render = () => {
+    const now = today();
+    const selected = $('entryDate').value || now;
+    const todayEntries = entriesFor(now);
+    const todayUnits = unitsFor(now);
+    const start = weekStart(now);
+    const days = weekDates(start);
+    const weekly = days.reduce((s,d)=>s+unitsFor(d),0);
+    const breaks = days.filter(d=>d<=now && isDry(d)).length;
+
+    $('todayCount').textContent = todayEntries.length;
+    $('todayUnits').textContent = number(todayUnits);
+    $('weekUnits').textContent = number(weekly);
+    $('dryWeek').textContent = `${breaks} / 7 days`;
+
+    // Never count missing data as an alcohol-free day.
+    let cursor = isDry(now) ? now : dayOffset(now,-1);
+    let streak = 0;
+
+    while(streak<3650 && isDry(cursor)) {
+      streak++;
+      cursor = dayOffset(cursor,-1);
+    }
+
+    $('streak').textContent = streak;
+    $('meterText').textContent = `${number(weekly)} / 10`;
+    $('meterFill').style.width =
+      `${Math.min(100,weekly/10*100)}%`;
+
+    $('waterCount').textContent =
+      `${data.waters[now]||0} glasses today`;
+
+    const oracle =
+      todayUnits>2
+      ? 'Monta, the numbers are talking. A pause sounds better than another round.'
+      : weekly>10
+      ? 'The weekly reference has been passed. Let’s make room for alcohol-free days.'
+      : isDry(now)
+      ? 'Plot twist: Monta chose an alcohol-free day. Iconic character development. 🌱'
+      : todayEntries.length===0
+      ? 'No entries today. Is Monta taking a break, or is the evidence still missing? 🕵️'
+      : 'Evidence received. No extra points for another drink — the goal is awareness. 🧠';
+
+    $('oracleText').textContent = oracle;
+
+    const selectedEntries = entriesFor(selected)
+      .slice()
+      .sort((a,b)=>String(b.timestamp).localeCompare(String(a.timestamp)));
+
+    $('logDateLabel').textContent = label(selected);
+
+    $('dateStatus').textContent = isDry(selected)
+      ? '🌱 Confirmed alcohol-free day.'
+      : selectedEntries.length
+      ? `${selectedEntries.length} drinks logged · ${number(unitsFor(selected))} standard drinks.`
+      : 'No entries yet. This does not automatically mean no alcohol.';
+
+    $('dryBtn').disabled = selectedEntries.length>0;
+    $('dryBtn').textContent = isDry(selected)
+      ? '↩ Unmark alcohol-free'
+      : '🌱 Mark day alcohol-free';
+
+    $('logList').innerHTML = '';
+
+    if(!selectedEntries.length) {
+      const p = document.createElement('p');
+      p.className = 'mini';
+      p.textContent = isDry(selected)
+        ? 'Officially marked as alcohol-free. 🌿'
+        : 'No recorded drinks for this date.';
+      $('logList').append(p);
+    } else {
+      selectedEntries.forEach(e=>{
+        const row = document.createElement('div');
+        row.className = 'log-row';
+
+        const left = document.createElement('div');
+        const n = document.createElement('div');
+        n.className = 'log-name';
+        n.textContent = `${e.emoji||'🍸'} ${e.name||'Drink'}`;
+
+        const meta = document.createElement('div');
+        meta.className = 'log-meta';
+        meta.textContent =
+          `${e.ml} mL · ${e.abv}% ABV · ${number(unit(e))} standard drinks`;
+
+        left.append(n,meta);
+
+        const del = document.createElement('button');
+        del.type = 'button';
+        del.className = 'icon-btn';
+        del.textContent = 'Remove';
+
+        del.addEventListener('click',()=>{
+          data.entries = data.entries.filter(item=>item.id!==e.id);
+          if(save()) {
+            render();
+            toast('Entry removed.');
+          }
+        });
+
+        row.append(left,del);
+        $('logList').append(row);
+      });
+    }
+
+    const last7 = Array.from(
+      {length:7},(_,i)=>dayOffset(now,i-6)
+    );
+    const scale = Math.max(2,...last7.map(unitsFor));
+    $('trend').innerHTML = '';
+
+    last7.forEach(date=>{
+      const value = unitsFor(date);
+      const known = entriesFor(date).length>0 || isDry(date);
+
+      const col = document.createElement('div');
+      col.className = 'bar-col';
+
+      const num = document.createElement('div');
+      num.className = 'bar-num';
+      num.textContent = known ? number(value) : '?';
+
+      const track = document.createElement('div');
+      track.className = 'bar-track';
+
+      const bar = document.createElement('div');
+      bar.className = 'bar';
+      bar.style.height =
+        `${value>0?Math.max(4,value/scale*100):0}%`;
+
+      track.append(bar);
+
+      const day = document.createElement('div');
+      day.className = 'day';
+      day.textContent =
+        new Date(`${date}T12:00:00`).toLocaleDateString(
+          'en-GB',{weekday:'short'}
+        );
+
+      col.title = `${label(date)}: ${
+        known ? number(value)+' standard drinks' : 'not recorded'
+      }`;
+
+      col.append(num,track,day);
+      $('trend').append(col);
+    });
+
+    const allDry = data.dryDates.filter(isDry).length;
+
+    const awards = [
+      ['🌱 First clear day',allDry>=1],
+      ['📓 First honest log',data.entries.length>=1],
+      ['🌿 3-day break',streak>=3],
+      ['🌟 7-day break',streak>=7],
+      ['💧 Hydration started',
+        Object.values(data.waters).some(n=>n>0)]
+    ];
+
+    $('awards').innerHTML = '';
+
+    awards.forEach(([title,earned])=>{
+      const span = document.createElement('span');
+      span.className = 'award'+(earned?'':' locked');
+      span.textContent = (earned?'✓ ':'🔒 ')+title;
+      $('awards').append(span);
+    });
+
+    $('calendar').innerHTML = '';
+
+    Array.from(
+      {length:21},(_,i)=>dayOffset(now,i-20)
+    ).forEach(date=>{
+      const count = entriesFor(date).length;
+      const btn = document.createElement('button');
+
+      btn.type = 'button';
+      btn.className =
+        'calday'+(date===now?' today':'')+
+        (isDry(date)?' dry':count?' drinking':'');
+
+      const day = document.createElement('div');
+      day.className = 'daynum';
+      day.textContent = Number(date.slice(-2));
+
+      const info = document.createElement('div');
+      info.className = 'dayinfo';
+      info.textContent = isDry(date)
+        ? '🌿 Clear'
+        : count
+        ? `${number(unitsFor(date))} std`
+        : '—';
+
+      btn.title = label(date);
+      btn.append(day,info);
+
+      btn.addEventListener('click',()=>{
+        $('entryDate').value = date;
+        render();
+        $('logDateLabel').scrollIntoView({
+          behavior:'smooth',block:'center'
+        });
+      });
+
+      $('calendar').append(btn);
+    });
+  };
+
+  $('entryDate').value = today();
+  $('entryDate').max = today();
+
+  $('entryDate').addEventListener('change',render);
+
+  $('addDrink').addEventListener('click',()=>{
+    const date = $('entryDate').value;
+    const ml = Number($('volume').value);
+    const abv = Number($('abv').value);
+
+    if(!date || date>today()) {
+      toast('Choose today or a past date.');
+      return;
+    }
+
+    if(!(ml>0 && ml<=2000 && abv>0 && abv<=90)) {
+      toast('Check the serving size and alcohol strength.');
+      return;
+    }
+
+    const name = $('customName').value.trim() || chosen.name;
+
+    data.entries.push({
+      id: globalThis.crypto?.randomUUID?.() ||
+          `${Date.now()}-${Math.random()}`,
+      date,
+      name,
+      emoji: chosen.emoji,
+      ml,
+      abv,
+      grams: ml*abv/100*0.789,
+      timestamp: new Date().toISOString()
+    });
+
+    data.dryDates = data.dryDates.filter(d=>d!==date);
+
+    if(save()) {
+      $('customName').value = '';
+      render();
+      toast('Drink logged. Thanks for being accurate.');
+    }
+  });
+
+  $('dryBtn').addEventListener('click',()=>{
+    const date = $('entryDate').value;
+
+    if(!date || date>today() || entriesFor(date).length) {
+      return;
+    }
+
+    data.dryDates = isDry(date)
+      ? data.dryDates.filter(d=>d!==date)
+      : [...new Set([...data.dryDates,date])];
+
+    if(save()) {
+      render();
+      toast(isDry(date)
+        ? 'Alcohol-free day confirmed! 🌱'
+        : 'Mark removed.');
+    }
+  });
+
+  $('addWater').addEventListener('click',()=>{
+    const date = today();
+    data.waters[date] = Math.min(
+      99,(data.waters[date]||0)+1
+    );
+    if(save()) {
+      render();
+      toast('Hydration department approves. 💧');
+    }
+  });
+
+  $('removeWater').addEventListener('click',()=>{
+    const date = today();
+    data.waters[date] = Math.max(
+      0,(data.waters[date]||0)-1
+    );
+    if(save()) render();
+  });
+
+  $('exportBtn').addEventListener('click',()=>{
+    const blob = new Blob(
+      [JSON.stringify({
+        exportedAt:new Date().toISOString(),
+        ...data
+      },null,2)],
+      {type:'application/json'}
+    );
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `monta-tracker-${today()}.json`;
+    document.body.append(a);
+    a.click();
+    a.remove();
+
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  });
+
+  controls();
+  render();
+
+  document.addEventListener('visibilitychange',()=>{
+    if(!document.hidden) {
+      $('entryDate').max = today();
+      render();
+    }
+  });
+})();
+</script>
+</body>
+</html>
